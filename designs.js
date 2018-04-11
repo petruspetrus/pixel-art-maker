@@ -19,11 +19,13 @@ function agpMakeGrid(evt) {
   evt.preventDefault();
   // reset the default canvas color to white as the default
   document.getElementById("colorPicker").value = "#ffffff";
+
   // remove any existing art work
   let agpPixelCanvas=document.getElementById('pixelCanvas');
   while (agpPixelCanvas.hasChildNodes()) {
       agpPixelCanvas.removeChild(agpPixelCanvas.firstChild);
   }
+
   // retrieve the grid heoght and width
   let agpGridHeight=document.getElementById('inputHeight').value;
   let agpGridWidth=document.getElementById('inputWidth').value;
@@ -47,9 +49,8 @@ function agpMakeGrid(evt) {
 // -------------------------------------------------
 function agpColorInCanvas(evt) {
   // the blnMouseDown flag detects whether the mouse down event is triggered
-  // this will be true whether activated for a single click or continuous processing
+  // this will be true whether activated for a single click or continuous depression
   if (blnMouseDown===true){
-    console.log(agpColorSelected);
     evt.target.style.backgroundColor = agpColorSelected;
   }
 }
@@ -58,6 +59,13 @@ function agpColorInCanvas(evt) {
 // document is ready
 // -------------------------------------------------
 document.addEventListener('DOMContentLoaded',(function() {
+// -----------------------------------------------
+// listen for the form submit event
+// and draw a new canvas to be colored
+// -----------------------------------------------
+let agpSizePicker=document.querySelector('#submitButton');
+agpSizePicker.addEventListener('click',agpMakeGrid);
+
   // initialise the color picker to white, otherwise it will
   // be whatever colour was left behind after the last page
   // refresh
@@ -94,10 +102,4 @@ document.addEventListener('DOMContentLoaded',(function() {
   agpPixelCanvas.addEventListener('mousemove',function(){
     agpColorInCanvas(event);
   });
-  // -----------------------------------------------
-  // listen for the form submit event
-  // and draw a new canvas to be colored
-  // -----------------------------------------------
-  let agpSizePicker=document.querySelector('#submitButton');
-  agpSizePicker.addEventListener('click',agpMakeGrid);
 }));
