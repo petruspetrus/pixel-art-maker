@@ -4,10 +4,11 @@
 // -------------------------------------------------
 // declare two variables in global scope
 // agpColorSelected stores the colour selected
-// blnMouseDown is a flag showing the mousedown state
+// agpMouseDown is a flag showing the mousedown state
 // in the form
 var agpColorSelected;
-let blnMouseDown=false;
+let agpMouseDown=false;
+let agpParentElement=document.getElementById('#pixelCanvas')
 // -------------------------------------------------
 // agpMakeGrid function
 // Objective :  create a table cell based matrix to act as the
@@ -48,11 +49,11 @@ function agpMakeGrid(evt) {
 // Parameters:  evt is the event passed from the listener function
 // -------------------------------------------------
 function agpColorInCanvas(evt) {
-  // the blnMouseDown flag detects whether the mouse down event is triggered
+  // the agpMouseDown flag detects whether the mouse down event is triggered
   // this will be true whether activated for a single click or continuous depression
-  if (blnMouseDown===true){
-    evt.target.style.backgroundColor = agpColorSelected;
-  }
+  if (evt.target.tagName=='TD' && agpMouseDown===true){
+        evt.target.style.backgroundColor = agpColorSelected;
+      }
 }
 // -------------------------------------------------
 // ensure the various listeners only respond when the
@@ -84,7 +85,7 @@ agpSizePicker.addEventListener('click',agpMakeGrid);
   // -----------------------------------------------
   let agpPixelCanvas=document.querySelector('#pixelCanvas')
   agpPixelCanvas.addEventListener('mousedown',function(){
-    blnMouseDown=true;
+    agpMouseDown=true;
     agpColorInCanvas(event);
   });
   // -----------------------------------------------
@@ -93,7 +94,7 @@ agpSizePicker.addEventListener('click',agpMakeGrid);
   // to stop painting
   // -----------------------------------------------
   window.addEventListener('mouseup',function(){
-    blnMouseDown=false;
+    agpMouseDown=false;
   });
   //------------------------------------------------
   // if the mouse is being moved then try to paint
